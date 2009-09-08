@@ -25,17 +25,18 @@ You can run hookfire, sheepie, or both:
 
 == Setup & Config
 
-1. Run: +sudo gem install tinder active_support json rest_client+
+1. Run:
+  sudo gem install tinder active_support json rest_client
 
-2. Edit +campfire.json.sample+ and save as +campfire.json+
+2. Edit campfire.json.sample and save as campfire.json
 
    If using sheepie, set 'bot_name' to whatever other people will address the bot
    with.  Doesn't need to match its Campfire name, just what people type.
 
 3. Run:
-   +ruby ./hookfire.rb &+
+  ruby ./hookfire.rb &
    and/or
-   +ruby ./sheepie.rb &+
+  ruby ./sheepie.rb &
 
    Run them in the background, use screen, or otherwise daemonize.
 
@@ -54,9 +55,12 @@ caller is really verbose or you want to reformat its input.
 
 In Google Reader, go to Settings -> Send To.  Hit "Create a custom link."  Use:
 
-Name: +Campfire+
-URL: +http://your.hookfire.url/speak?message=Troy has shared ${title} from ${source}. ${short-url}+
-Icon URL: +http://campfirenow.com/favicon.ico+
+Name:
+  Campfire
+URL:
+  http://your.hookfire.url/speak?message=Troy has shared ${title} from ${source}. ${short-url}
+Icon URL:
+  http://campfirenow.com/favicon.ico
 
 Save.  You'll see a new option on each article's Send To link.  Everyone in
 Campfire will respect your awesome taste in RSS.
