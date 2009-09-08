@@ -26,7 +26,7 @@ You can run hookfire, sheepie, or both:
 == Setup & Config
 
 1. Run:
-  sudo gem install tinder active_support json rest_client
+  sudo gem install tinder active_support json rest-client
 
 2. Edit campfire.json.sample and save as campfire.json
 
