@@ -35,12 +35,12 @@ You can run hookfire, sheepie, or both:
 
 3. Run:
   ruby bin/hookfire.rb campfire.json hookfire_hooks.json &
-   and/or
+and/or
   ruby bin/sheepie.rb campfire.json sheepie_hooks.json &
 
-   Run them backgrounded, use screen, or otherwise daemonize.
-   
-   Usual Sinatra arguments apply to hookfire:
+Run them backgrounded, use screen, or otherwise daemonize.
+  
+Usual Sinatra arguments apply to hookfire:
   ruby bin/hookfire.rb campfire.json hookfire_hooks.json -p 12345
 
 
@@ -55,7 +55,7 @@ the URL and a regex to match relevant 'message' values.  Use this when the
 caller is really verbose or you want to reformat its input.
 
 
-=== example: Google Reader "Send to Campfire"
+=== Example: Google Reader "Send to Campfire"
 
 In Google Reader, go to Settings -> Send To.  Hit "Create a custom link."  Use:
 
@@ -79,19 +79,25 @@ sheepie_hooks.json, then calls the first matching hook URL (if any).  Hook
 response body is spoken in Campfire.
 
 Preconfigured with these commands:
- * count Google results.  Example:
-     sheepie: gcount "wu tang forever"
-   runs against: http://www.scriptlets.org/view/1ffqh5b
 
- * inline someone's most recent tweet as a Twictur.es image.  Example:
-     sheepie: @cloudvox
-   runs against: http://www.scriptlets.org/view/12z9upp
+* Count Google results.  Example:
+  sheepie: gcount "wu tang forever"
+
+Runs against: http://www.scriptlets.org/view/1ffqh5b
+
+* Inline someone's most recent tweet as a Twictur.es image.  Example:
+   sheepie: @cloudvox
+
+Runs against: http://www.scriptlets.org/view/12z9upp
 
 
 == Notes
 
 All HTTP handlers and requests are synchronous and block.  "High volume" in
 this context is once per minute, so you should be safe.
+
+You're on your own if the preconfigured hook scripts break.  They may be
+updated/changed in the future (in which case, URLs will change).
 
 Fork requests welcome.
 
