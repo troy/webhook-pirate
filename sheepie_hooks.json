@@ -1,0 +1,12 @@
+[
+  {
+    "name": "twicture",
+    "regex": "^@\\w",
+    "url": "http://www.scriptlets.org/run/1ffqh5b"
+  },
+  {
+    "name": "googlecount",
+    "regex": "^gcount\ ",
+    "url": "http://www.scriptlets.org/run/12z9upp"
+  }
+]

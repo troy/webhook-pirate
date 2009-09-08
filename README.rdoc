@@ -1,0 +1,95 @@
+= webhook-pirate
+
+== What Is It?
+
+webhook Campfire bot and "speak" REST API.  Teeny regex->hook dispatcher.
+
+== More
+
+You can run hookfire, sheepie, or both:
+
+* hookfire: poor man's Campfire REST interface (as Sinatra app).
+            Exposes /speak (GET and POST).  Takes 1 param 'message' and sends
+            verbatim to Campfire.  Optionally, match & pre-process requests via
+            a webhook (hookfire_hooks.json)
+
+* sheepie:  daemonized webhook-backed Campfire bot.
+            Idles until addressed, then compares request to per-action regexes
+            (sheepie_hooks.json).  Upon match, calls action URL to generate
+            reply.
+
+* pirate:   regex/hook URL tracker and dispatcher library.
+            Tracks & fires lightweight HTTP targets.  Returns responses.
+
+
+== Setup & Config
+
+1. sudo gem install tinder active_support json rest_client
+
+2. Edit campfire.json.sample and save as campfire.json.
+
+If using sheepie, set 'bot_name' to whatever other people will address the bot
+with.  Doesn't need to match its Campfire name, just what people type.
+
+3. Run:
+  ruby ./hookfire.rb &
+and/or
+  ruby ./sheepie.rb &
+
+Run them in the background, use screen, or otherwise daemonize.
+
+
+== hookfire
+
+By default, inbound messages are sent directly to the channel as-is.
+
+To process messages from less-flexible calling services, make a HTTP target
+which accepts 1 GET param called 'message', munges, and outputs whatever should
+go to the channel (as response body).  Then edit hookfire_hooks.json; define
+the URL and a regex to match relevant 'message' values.  Use this when the
+caller is really verbose or you want to reformat its input.
+
+=== hookfire Example: Google Reader "Send to Campfire"
+
+In Google Reader, go to Settings -> Send To.  Hit "Create a custom link."  Use:
+
+Name: Campfire
+URL: http://your.hookfire.url/speak?message=Troy has shared ${title} from ${source}. ${short-url}
+Icon URL: http://campfirenow.com/favicon.ico
+
+Save.  You'll see a new option on each article's Send To link.  Everyone in
+Campfire will respect your awesome taste in RSS.
+
+
+== sheepie
+
+sheepie lets you add third-party services to Campfire.
+
+When the bot is addressed, it matches the message against regexes configured in
+sheepie_hooks.json, then calls the first matching hook URL (if any).  Hook 
+response body is spoken in Campfire.
+
+Preconfigured with these commands:
+ * count Google results.  Example:
+     sheepie: gcount "wu tang forever"
+   runs against: http://www.scriptlets.org/view/1ffqh5b
+
+ * inline someone's most recent tweet as a Twictur.es image.  Example:
+     sheepie: @cloudvox
+   runs against: http://www.scriptlets.org/view/12z9upp
+
+
+== Notes
+
+All HTTP handlers and requests are synchronous and block.  "High volume" in
+this context is once per minute, so you should be safe.
+
+Fork requests welcome.
+
+
+== Contact
+
+Troy Davis
+@troyd
+http://troy.yort.com/
+
