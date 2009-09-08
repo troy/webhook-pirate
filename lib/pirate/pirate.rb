@@ -23,11 +23,12 @@ module Pirate
   
     private
     def dispatch(drivel)
+      req_url = @url
       if @method == :get
         if URI.parse(@url).query.present?
           req_url += "#{@url}&#{drivel.to_param}"
         else
-          req_url += "#{@url}?#{drivel_to_param}"
+          req_url += "#{@url}?#{drivel.to_param}"
         end
         RestClient.send @method, req_url,
           :accept => 'text/plain, text/html'
@@ -47,7 +48,7 @@ module Pirate
     end
   
     def self.new_from_json(hooks_config)
-      @pirate = Dispatcher.new(JSON.parse(hooks_config).map { |c| Hook.new(c) })
+      Dispatcher.new(JSON.parse(hooks_config).map { |c| Hook.new(c) })
     end
   
   

@@ -34,11 +34,14 @@ You can run hookfire, sheepie, or both:
    with.  Doesn't need to match its Campfire name, just what people type.
 
 3. Run:
-  ruby ./hookfire.rb &
+  ruby bin/hookfire.rb campfire.json hookfire_hooks.json &
    and/or
-  ruby ./sheepie.rb &
+  ruby bin/sheepie.rb campfire.json sheepie_hooks.json &
 
-   Run them in the background, use screen, or otherwise daemonize.
+   Run them backgrounded, use screen, or otherwise daemonize.
+   
+   Usual Sinatra arguments apply to hookfire:
+  ruby bin/hookfire.rb campfire.json hookfire_hooks.json -p 12345
 
 
 == hookfire
@@ -50,6 +53,7 @@ which accepts 1 GET param called 'message', munges, and outputs whatever should
 go to the channel (as response body).  Then edit hookfire_hooks.json; define
 the URL and a regex to match relevant 'message' values.  Use this when the
 caller is really verbose or you want to reformat its input.
+
 
 === example: Google Reader "Send to Campfire"
 

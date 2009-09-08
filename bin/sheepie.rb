@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
+$LOAD_PATH << File.dirname(__FILE__) + '/../lib'
 
-require 'lib/pirate/pirate'
+require 'pirate'
 require 'tinder'
 
 class Sheepie
@@ -24,7 +25,7 @@ class Sheepie
         drivel[:message].gsub! '\u0026quot;', '"'
         drivel[:message].sub! meant_for_me, ''
 
-        #puts "Received: #{drivel[:message]}"
+        puts "Received: #{drivel[:message]}"
         begin
           responses = @pirate.process drivel
           responses.each { |r| room.speak r }
@@ -38,7 +39,7 @@ class Sheepie
   end
 end
 
-sheepie = Sheepie.new 'sheepie_hooks.json'
-cfg = JSON.parse File.read('campfire.json')
+cfg = JSON.parse File.read(ARGV[0])
+sheepie = Sheepie.new ARGV[1]
 sheepie.baah(*cfg.values_at('subdomain', 'email_address', 'password',
                             'room_name', 'bot_name', 'ssl'))

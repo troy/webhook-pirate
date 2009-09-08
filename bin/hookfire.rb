@@ -1,8 +1,9 @@
 #!/usr/bin/ruby
+$LOAD_PATH << File.dirname(__FILE__) + '/../lib'
 
 require 'sinatra'
 require 'tinder'
-require 'lib/pirate/pirate'
+require 'pirate'
 
 class Hookfire
   attr_accessor :pirate
@@ -42,9 +43,8 @@ def handle_speak
   message = params[:message]
 
   begin
-    hookfire = Hookfire.new 'hookfire_hooks.json'
-
-    cfg = JSON.parse File.read('campfire.json')
+    cfg = JSON.parse File.read(ARGV[0])
+    hookfire = Hookfire.new ARGV[1]
     hookfire.speak(message, *cfg.values_at('subdomain', 'email_address', 
                                            'password', 'room_name', 'ssl'))
   rescue Exception => e
