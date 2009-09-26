@@ -1,0 +1,9 @@
+{
+  "key": "kerfluffle",
+  "subdomain": "somesite",
+  "email_address": "your-bot@domain.com",
+  "password": "botpass",
+  "room_name": "Feisty Repartee",
+  "ssl": true,
+  "bot_name": "Sheepie"
+}
