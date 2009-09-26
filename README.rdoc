@@ -30,8 +30,12 @@ You can run hookfire, sheepie, or both:
 
 2. Edit campfire.json.sample and save as campfire.json
 
-   If using sheepie, set 'bot_name' to whatever other people will address the bot
-   with.  Doesn't need to match its Campfire name, just what people type.
+   If using sheepie: set 'bot_name' to whatever other people will address the
+   bot as.  Doesn't need to match its Campfire name, just what people type.
+
+   If using hookfire: optionally set 'key' to random string for authorization,
+   so strangers can't guess URL.  If set, HTTP requests must include this as
+   the 'key' param.
 
 3. Run:
   ruby bin/hookfire.rb campfire.json hookfire_hooks.json &
@@ -62,7 +66,7 @@ In Google Reader, go to Settings -> Send To.  Hit "Create a custom link."  Use:
 Name:
   Campfire
 URL:
-  http://your.hookfire.url/speak?message=Troy has shared ${title} from ${source}. ${short-url}
+  http://your.hookfire.url/speak?key=kerfluffle&message=Troy has shared ${title} from ${source}. ${short-url}
 Icon URL:
   http://campfirenow.com/favicon.ico
 

@@ -40,10 +40,14 @@ get '/speak' do
 end
 
 def handle_speak
-  message = params[:message]
+  cfg = JSON.parse File.read(ARGV[0])
 
+  if cfg['key'] and (params[:key] != cfg['key'])
+    throw :halt, [401, "Invalid Access Key"] and return
+  end
+
+  message = params[:message]
   begin
-    cfg = JSON.parse File.read(ARGV[0])
     hookfire = Hookfire.new ARGV[1]
     hookfire.speak(message, *cfg.values_at('subdomain', 'email_address', 
                                            'password', 'room_name', 'ssl'))
