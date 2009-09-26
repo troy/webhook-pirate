@@ -12,7 +12,7 @@ You can run hookfire, sheepie, or both:
 * *hookfire*: poor man's Campfire REST interface (as Sinatra app).
               Exposes /speak (GET and POST).  Takes 1 param 'message' and sends
               verbatim to Campfire.  Optionally, match & pre-process requests via
-              a webhook (hookfire_hooks.json)
+              a webhook (hookfire_hooks.json).  Deployable on Heroku.
 
 * *sheepie*:  daemonized webhook-backed Campfire bot.
               Idles until addressed, then compares request to per-action regexes
@@ -42,10 +42,11 @@ You can run hookfire, sheepie, or both:
 and/or
   ruby bin/sheepie.rb campfire.json sheepie_hooks.json &
 
-Run them backgrounded, use screen, or otherwise daemonize.
+Run them backgrounded, use screen, or otherwise daemonize.  When no arguments
+are provided, they look for the filenames above.
   
 Usual Sinatra arguments apply to hookfire:
-  ruby bin/hookfire.rb campfire.json hookfire_hooks.json -p 12345
+  ruby bin/hookfire.rb -p 12345
 
 
 == hookfire
@@ -76,34 +77,36 @@ Campfire will respect your awesome taste in RSS.
 
 === Running hookfire on Heroku
 
-Without forking this repo, you can deploy to Heroku and have a HTTP-accessible
-Campfire 'speak' URL.  The webhook regexes/URLs can even be customized.
-Either:
+Without forking this repo, you can deploy to Heroku and have your own 
+Campfire 'speak' URL in about 3 minutes.  The webhook regexes/URLs can even be
+customized.  Either:
 
 A. Don't fork the repo: edit the config files, commit, and only push to 
 Heroku.  You won't be able to push to the main github repo, but that's not 
 required.  Don't lose your config files.
-               
    -- OR --
-
 B. Fork the repo: edit the config files, commit, and push to Heroku or to your
 repo.  Should work as-is: hookfire defaults to the standard config filenames
 when none are given, and the config.ru will start it on Heroku. 
 
-For either:
-   git clone <url to main repo or your new fork>
-   cp campfire.json.sample campfire.json
-   vi campfire.json hookfire_hooks.json
-   git commit -a
+For A or B:
+  git clone <url to main repo or your new fork>
+  cp campfire.json.sample campfire.json
+  vi campfire.json hookfire_hooks.json
+  git add -f campfire.json   # force; this file is .gitignored
+  git commit -a
 
-   sudo gem install heroku
-   heroku create myapp
-   git remote add heroku git@heroku.com:myapp.git
-   git push heroku master
+  sudo gem install heroku
+  heroku create some-neat-hostname
+  git remote add heroku git@heroku.com:some-neat-hostname.git
+  git push heroku master
+
+Voila: http://some-neat-hostname.heroku.com/speak?message=baah&key=whatever
 
 Note: sheepie bot won't run on Heroku (no daemons)
 
 More: http://docs.heroku.com/
+
 
 == sheepie
 
