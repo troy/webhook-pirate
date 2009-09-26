@@ -41,5 +41,15 @@ end
 
 cfg = JSON.parse File.read(ARGV[0])
 sheepie = Sheepie.new ARGV[1]
-sheepie.baah(*cfg.values_at('subdomain', 'email_address', 'password',
-                            'room_name', 'bot_name', 'ssl'))
+loop do
+  begin
+    sheepie.baah(*cfg.values_at('subdomain', 'email_address', 'password',
+                              'room_name', 'bot_name', 'ssl'))
+  rescue Exception => e
+    # timed out, could not connect, etc
+    puts e.message
+  end
+
+  # retry delay
+  sleep 10
+end
