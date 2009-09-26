@@ -74,6 +74,37 @@ Save.  You'll see a new option on each article's Send To link.  Everyone in
 Campfire will respect your awesome taste in RSS.
 
 
+=== Running hookfire on Heroku
+
+Without forking this repo, you can deploy to Heroku and have a HTTP-accessible
+Campfire 'speak' URL.  The webhook regexes/URLs can even be customized.
+Either:
+
+A. Don't fork the repo: edit the config files, commit, and only push to 
+Heroku.  You won't be able to push to the main github repo, but that's not 
+required.  Don't lose your config files.
+               
+   -- OR --
+
+B. Fork the repo: edit the config files, commit, and push to Heroku or to your
+repo.  Should work as-is: hookfire defaults to the standard config filenames
+when none are given, and the config.ru will start it on Heroku. 
+
+For either:
+   git clone <url to main repo or your new fork>
+   cp campfire.json.sample campfire.json
+   vi campfire.json hookfire_hooks.json
+   git commit -a
+
+   sudo gem install heroku
+   heroku create myapp
+   git remote add heroku git@heroku.com:myapp.git
+   git push heroku master
+
+Note: sheepie bot won't run on Heroku (no daemons)
+
+More: http://docs.heroku.com/
+
 == sheepie
 
 sheepie lets you add third-party services to Campfire.

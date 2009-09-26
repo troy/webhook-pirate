@@ -40,19 +40,19 @@ get '/speak' do
 end
 
 def handle_speak
-  cfg = JSON.parse File.read(ARGV[0])
+  cfg = JSON.parse File.read(ARGV[0] || 'campfire.json')
 
-  if cfg['key'] and (params[:key] != cfg['key'])
+  if params[:key] != cfg['key']
     throw :halt, [401, "Invalid Access Key"] and return
   end
 
   message = params[:message]
   begin
-    hookfire = Hookfire.new ARGV[1]
+    hookfire = Hookfire.new(ARGV[1] || 'hookfire_hooks.json')
     hookfire.speak(message, *cfg.values_at('subdomain', 'email_address', 
                                            'password', 'room_name', 'ssl'))
   rescue Exception => e
-    throw :halt, [503, "Service Unavailable"]
+    throw :halt, [503, "Service Unavailable"] and return
   end
 
   status 200
